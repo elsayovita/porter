@@ -46,7 +46,7 @@ def app_body():
                                     avg_item_price=st.session_state['input_features']['avg_item_price'],
                                     order_protocol=st.session_state['input_features']['order_protocol'],
                                     total_outstanding_orders=st.session_state['input_features']['total_outstanding_orders'])
-        st.success(default_msg.format(assessment))
+        st.success(default_msg.format(f"{round(assessment)} minutes"))
     return None
 
 def main():
