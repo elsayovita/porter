@@ -19,9 +19,9 @@ def app_sidebar():
     total_outstanding_orders = st.sidebar.text_input('Total outstanding orders')
     def get_input_features():
         input_features = {'store_primary_category': store_primary_category,
-                          'market_id': market_id,
+                          'market_id': str(market_id),
                           'avg_item_price': int(avg_item_price),
-                          'order_protocol': order_protocol,
+                          'order_protocol': str(order_protocol),
                           'total_outstanding_orders': int(total_outstanding_orders)
                          }
         return input_features
