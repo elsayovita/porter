@@ -10,24 +10,21 @@ def save_data(data_path, df):
     df.to_csv(data_path.replace('.csv','_processed.csv'), index=False)
     return None
 
-def log_txf(df, cols: list):
-    for col in cols:
-        df['log_'+col] = np.log(df[col]+1)
-    return df
 
-def remap_emp_length(x):
-    if x in ['< 1 year','1 year','2 years']:
-        return 'less_than_3yr'
-    if x in ['3 years','4 years','5 years']:
-        return '3_to_5yr'
-    if x in ['6 years','7 years','8 years','9 years']:
-        return '6_to_9yr'
-    return 'more_than_9yr'
+def remap_store_primary_category(x):
+    if x in ['american', 'burger', 'chinese',
+             'dessert', 'fast', 'indian', 'italian',
+             'japanese', 'mediterranean', 'mexican',
+             'pizza', 'sandwich', 'thai', 'vietnamese']:
+        return x
+    return 'other'
 
 def run(data_path):
     df = load_data(data_path)
-    df = log_txf(df, ['annual_inc'])
-    df['emp_len'] = df['emp_length'].map(remap_emp_length)
+    df['market_id'] = df['market_id'].astype(str)
+    df['order_protocol'] = df['order_protocol'].astype(str)
+    df['avg_item_price'] = df['subtotal'] / df['total_items']
+    df['store_primary_category_agg'] = df['store_primary_category'].map(remap_store_primary_category)
     save_data(data_path, df)
     return df
 
